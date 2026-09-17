@@ -104,8 +104,13 @@ function decimalToPersianWords(num) {
   let result = numberToPersianWords(integerPart);
 
   if (decimalPart.length > 0) {
-    const decimalWords = decimalPart.split('').map(d => PERSIAN_DIGITS[parseInt(d, 10)]).join(' و ');
-    result += ` و نیم` if decimalPart === '5' && decimalPart.length === 1 else ` و ${decimalWords}`;
+    if (decimalPart === '5' && decimalPart.length === 1) {
+      // Special Persian convention for .5 → "نیم"
+      result += ' و نیم';
+    } else {
+      const decimalWords = decimalPart.split('').map(d => PERSIAN_DIGITS[parseInt(d, 10)]).join(' و ');
+      result += ` و ${decimalWords}`;
+    }
   }
 
   return result;
